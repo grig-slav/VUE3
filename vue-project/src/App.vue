@@ -245,7 +245,7 @@ function deleteStudent(id){
 
 
 
-<script setup>
+<!-- <script setup>
   import{ref,reactive, computed} from 'vue'
  const name=ref(0)
  const text=ref('')
@@ -273,4 +273,153 @@ function deleteStudent(id){
     Я согласен
   </label>
   <p>{{ agree }}</p>
+</template> -->
+
+
+<!-- <script setup>
+import {ref,computed} from 'vue'
+const isDisabled=ref("")
+const age=ref(true)
+</script>
+ 
+
+<template>
+  <label>
+    
+    <input :disabled="age" type="text" v-model="isDisabled">
+  </label>
+  <br>
+<button @click="age=!age" >{{ age?"Заблоировать":"Разблокировать" }}</button>
+<input type="checkbox" v-model="age" ></input>
+
+
+</template> -->
+
+
+<!-- <script setup>
+  import{ref,reactive, computed} from 'vue'
+  const isVisible=ref("")
+  const fruits=ref([
+    "Яблоко","Апельсин","Банан","Помидор"
+  ])
+  function addFruit(){
+  fruits.value.unshift(isVisible.value)
+}
+function deleteFruit(index){
+fruits.value.splice(index,1)  }
+
+</script>
+
+<template>
+  <ul v-for="(fruit, index) in fruits" :key="index" @click="deleteFruit(index)"><li @click="deleteFruit">{{ fruit }}</li></ul>
+  <input v-model="isVisible">
+  <button @click="addFruit">Add</button>
 </template>
+
+
+<styles>
+
+</styles> -->
+
+
+<script setup>
+  import{ref,reactive, computed} from 'vue'
+  const isId=ref()
+  const isVisible=ref("")
+  const isSalary=ref()
+  const isOtdel=ref("")
+  const isStatus=ref("")
+  const isSkills=ref("")
+  const isAge=ref()
+  function deleteFruit(id){
+    fruits.value = fruits.value.filter(fruit => fruit.id !== id)
+  }
+  const fruits=ref(
+    [
+    {
+      id:1,
+      name:'name1',
+      salary:100,
+      otdel:"WEB-разработка",
+      status:"ON",
+      skills:"крутой,умный,тупой",
+      age:30
+    },
+    {
+      id:2,
+      name:'name2',
+      salary:200,
+      age:40,
+      otdel:"Дизайн",
+      status:"ON",
+      skills:"крутой,умный",
+    },
+    {
+      id:3,
+      name:'name3',
+      salary:300,
+      age:50,
+      otdel:"Программист",
+      status:"OFF",
+      skills:"крутой",
+    }
+  ]
+
+  
+)
+
+function addFruit(){
+  fruits.value.push(isVisible.value,isOtdel.value,isAge.value,isSalary.value,isSkills.value,isStatus.value,isId.value)
+}
+</script>
+
+<template>
+  <div  >
+  <table border="1">
+    <thead>
+      <tr>
+        <th>Id</th>
+        <th>Имя</th>
+        <th>Зарплата</th>
+        <th>Возраст</th>
+        <th>Отдел</th>
+        <th>Статус</th>
+        <th>Умения</th>
+
+      </tr>
+    </thead>
+    <tbody>
+      <tr v-for="fruit in fruits":key="fruit.id">
+        <td>{{ fruit.id }}</td>
+        <td>{{ fruit.name }}</td>
+        <td>{{ fruit.salary }}</td>
+        <td>{{ fruit.age }}</td>
+        <td>{{ fruit.otdel }}</td>
+        <td>{{ fruit.status }}</td>
+        <td>{{ fruit.skills }}</td>
+        <td><a href="#" @click.prevent="deleteFruit(fruit.id)">Удалить</a></td>
+      </tr>
+    </tbody>
+  </table>
+
+
+    
+
+  </div>  <input v-model="isId" type="number" placeholder="id">
+  <input v-model="isVisible" type="text" placeholder="Name">
+    <input v-model="isSalary" type="number" placeholder="Salary">
+    <input v-model="isOtdel" type="text" placeholder="Otdel">
+    <input v-model="isStatus" type="text" placeholder="Status">
+    <input v-model="isSkills" type="text" placeholder="Skills">
+    <input v-model="isAge" type="number" placeholder="Age">
+
+    <button @click="addFruit">Add</button>
+</template>
+
+
+<styles>
+
+</styles>
+
+
+
