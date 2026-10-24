@@ -14,7 +14,7 @@
 <script setup>
 import { ref } from 'vue'
 
-const name = ref('Григорьев ВячесЛав')
+
 const age = ref(15)
 const city = ref('Краснодар')
 const napr = ref('WEB-разработка')
@@ -322,104 +322,347 @@ fruits.value.splice(index,1)  }
 </styles> -->
 
 
-<script setup>
-  import{ref,reactive, computed} from 'vue'
-  const isId=ref()
-  const isVisible=ref("")
-  const isSalary=ref()
-  const isOtdel=ref("")
-  const isStatus=ref("")
-  const isSkills=ref("")
-  const isAge=ref()
-  function deleteFruit(id){
-    fruits.value = fruits.value.filter(fruit => fruit.id !== id)
+
+
+<!-- <script setup>
+import { ref } from 'vue'
+
+const isId = ref('')
+const isName = ref('')
+const isSalary = ref('')
+const isAge = ref('')
+const isOtdel = ref('')
+const isStatus = ref('')
+const isSkills = ref('')
+
+const fruits = ref([
+  {
+    id: 1,
+    name: 'name1',
+    salary: 100,
+    otdel: 'WEB-разработка',
+    status: 'ON',
+    skills: 'крутой, умный, тупой',
+    age: 30
+  },
+  {
+    id: 2,
+    name: 'name2',
+    salary: 200,
+    age: 40,
+    otdel: 'Дизайн',
+    status: 'ON',
+    skills: 'крутой, умный'
+  },
+  {
+    id: 3,
+    name: 'name3',
+    salary: 300,
+    age: 50,
+    otdel: 'Программист',
+    status: 'OFF',
+    skills: 'крутой'
   }
-  const fruits=ref(
-    [
-    {
-      id:1,
-      name:'name1',
-      salary:100,
-      otdel:"WEB-разработка",
-      status:"ON",
-      skills:"крутой,умный,тупой",
-      age:30
-    },
-    {
-      id:2,
-      name:'name2',
-      salary:200,
-      age:40,
-      otdel:"Дизайн",
-      status:"ON",
-      skills:"крутой,умный",
-    },
-    {
-      id:3,
-      name:'name3',
-      salary:300,
-      age:50,
-      otdel:"Программист",
-      status:"OFF",
-      skills:"крутой",
-    }
-  ]
+])
 
-  
-)
+function deleteFruit(id) {
+  fruits.value = fruits.value.filter(fruit => fruit.id !== id)
+}
 
-function addFruit(){
-  fruits.value.push(isVisible.value,isOtdel.value,isAge.value,isSalary.value,isSkills.value,isStatus.value,isId.value)
+function addFruit() {
+  if (!isId.value || !isName.value) {
+    alert('Заполните хотя бы ID и Имя')
+    return
+  }
+
+  const newItem = {
+    id: Number(isId.value),
+    name: isName.value,
+    salary: Number(isSalary.value) || 0,
+    age: Number(isAge.value) || 0,
+    otdel: isOtdel.value,
+    status: isStatus.value,
+    skills: isSkills.value
+  }
+
+  fruits.value.push(newItem)
+
+  isId.value = ''
+  isName.value = ''
+  isSalary.value = ''
+  isAge.value = ''
+  isOtdel.value = ''
+  isStatus.value = ''
+  isSkills.value = ''
 }
 </script>
 
 <template>
-  <div  >
-  <table border="1">
-    <thead>
-      <tr>
-        <th>Id</th>
-        <th>Имя</th>
-        <th>Зарплата</th>
-        <th>Возраст</th>
-        <th>Отдел</th>
-        <th>Статус</th>
-        <th>Умения</th>
+  <div>
+    <table border="1">
+      <thead>
+        <tr>
+          <th>Id</th>
+          <th>Имя</th>
+          <th>Зарплата</th>
+          <th>Возраст</th>
+          <th>Отдел</th>
+          <th>Статус</th>
+          <th>Умения</th>
+          <th>Действие</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="fruit in fruits" :key="fruit.id">
+          <td>{{ fruit.id }}</td>
+          <td>{{ fruit.name }}</td>
+          <td>{{ fruit.salary }}</td>
+          <td>{{ fruit.age }}</td>
+          <td>{{ fruit.otdel }}</td>
+          <td>{{ fruit.status }}</td>
+          <td>{{ fruit.skills }}</td>
+          <td>
+            <a href="#" @click.prevent="deleteFruit(fruit.id)">Удалить</a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
 
-      </tr>
-    </thead>
-    <tbody>
-      <tr v-for="fruit in fruits":key="fruit.id">
-        <td>{{ fruit.id }}</td>
-        <td>{{ fruit.name }}</td>
-        <td>{{ fruit.salary }}</td>
-        <td>{{ fruit.age }}</td>
-        <td>{{ fruit.otdel }}</td>
-        <td>{{ fruit.status }}</td>
-        <td>{{ fruit.skills }}</td>
-        <td><a href="#" @click.prevent="deleteFruit(fruit.id)">Удалить</a></td>
-      </tr>
-    </tbody>
-  </table>
-
-
-    
-
-  </div>  <input v-model="isId" type="number" placeholder="id">
-  <input v-model="isVisible" type="text" placeholder="Name">
-    <input v-model="isSalary" type="number" placeholder="Salary">
-    <input v-model="isOtdel" type="text" placeholder="Otdel">
-    <input v-model="isStatus" type="text" placeholder="Status">
-    <input v-model="isSkills" type="text" placeholder="Skills">
-    <input v-model="isAge" type="number" placeholder="Age">
-
-    <button @click="addFruit">Add</button>
+    <div style="margin-top: 20px;">
+      <input v-model="isId" type="number" placeholder="id" />
+      <input v-model="isName" type="text" placeholder="Name" />
+      <input v-model="isSalary" type="number" placeholder="Salary" />
+      <input v-model="isAge" type="number" placeholder="Age" />
+      <input v-model="isOtdel" type="text" placeholder="Otdel" />
+      <input v-model="isStatus" type="text" placeholder="Status" />
+      <input v-model="isSkills" type="text" placeholder="Skills" />
+      <button @click="addFruit">Add</button>
+    </div>
+  </div>
 </template>
+<style scoped>
 
 
-<styles>
-
-</styles>
+</style> -->
 
 
+<!-- <script setup>
+import { ref } from 'vue'
 
+const className='qwerty'
+const isActive = ref(false)
+const hasError=ref(true)
+
+</script>
+
+<template>
+  <div :class="{
+                error:hasError?'success':'error'}">
+    USER
+  </div>
+
+  <button @click="active=!active":class='className'>
+      change
+    </button>
+</template>
+<style scoped>
+/* div{
+  width: 200px;
+  padding: 20px;
+  background: rgb(148, 147, 147);
+}
+.active{
+  background: greenyellow;
+  color: blue;
+  font-weight: 900;
+}
+button{
+  color:rgb(0, 0, 0);
+  
+} */
+.success{
+  color: green;
+}
+.error{
+  color: red;
+}
+
+</style> -->
+<!-- 
+<script setup>
+import { ref } from 'vue'
+
+const employess=ref([
+  {
+    id:1,
+    name:"Aboba",
+    active:true
+  },
+  {
+    id:2,
+    name:"Aboba2",
+    active:false
+  }
+])
+function delete1(id) {
+  employess.value = employess.value.filter(employee => employee.id !== id)
+}
+</script>
+
+<template>
+  <div v-for="employee in employess":key="employee.id" class="employee"
+  :class="{working:employee.active,nerab:!employee.active
+  }" @click="employee.active=!employee.active" >{{ employee.active?"Работает":"Не работает" }}
+
+  {{ employee.name }}
+
+  
+  
+  </div >
+</template>
+<style scoped>
+.employee{
+  width: 200px;
+  padding: 15px;
+  margin: 10px;
+  border: 1px solid black;
+  border-radius: 10px;
+  transition: 1s ease-in-out;
+}
+.nerab{
+  background-color:red
+}
+.working{
+  background-color: aqua;
+}
+
+</style> -->
+
+
+<!-- <script setup>
+import { ref } from 'vue'
+
+const name=ref('')
+const age=ref(0)
+const agree=ref(false)
+function sendForm(){
+  console.log(name.value)
+  console.log(age.value)
+}
+</script>
+
+<template>
+<form @submit.prevent="sendForm">
+  <input 
+  v-model="name"
+  type="text"
+  placeholder="Введите имя">
+
+  <input 
+  v-model="age"
+  type="number"
+  placeholder="Введите возраст">
+  <label>
+  <input type="checkbox" v-model="agree">
+  Я согласен с правилами
+  </label>
+  <button type="submit" :disabled="!agree">
+    Отправить
+  </button>
+</form>
+  
+</template>
+<style scoped>
+
+
+</style> -->
+
+<!-- <script setup>
+import { ref } from 'vue'
+
+const num=ref(0)
+const result=ref(0)
+function calc(){
+  result.value=num.value*num.value
+}
+</script>
+
+<template>
+<input type="number" v-model.number="num" placeholder="Введите число">
+  <button @click="calc">
+    Вычислить квадрат
+  </button>
+  <p>
+    результат:{{ result }}
+  </p>
+</template>
+<style scoped>
+
+
+</style> -->
+
+
+<script setup>
+import { computed, ref } from 'vue'
+
+const days = ref([...Array(31).keys()].map(i => String(i + 1))) // ['1','2',...,'31']
+const month = ref(['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'])
+const year = ref(['2026', '2025', '2024', '2023', '2022'])
+
+const selectedDay = ref('')
+const selectedMonth = ref('')
+const selectedYear = ref('')
+
+function isLeapYear(year) {
+  const y = Number(year)
+  return (y % 4 === 0 && y % 100 !== 0) || (y % 400 === 0)
+}
+
+const daysInMonth = computed(() => {
+  if (!selectedMonth.value) return 31
+  if (selectedMonth.value === 'Февраль') {
+    return isLeapYear(selectedYear.value) ? 29 : 28
+  }
+  if (['Апрель', 'Июнь', 'Сентябрь', 'Ноябрь'].includes(selectedMonth.value)) {
+    return 30
+  }
+  return 31 // для остальных месяцев
+})
+</script>
+
+<template>
+  <select v-model="selectedDay">
+    <option value="">Выберите день</option>
+    <option
+      v-for="num in daysInMonth.value"
+      :key="num"
+      :value="String(num)"
+    >
+      {{ num }}
+    </option>
+  </select>
+
+  <select v-model="selectedMonth">
+    <option value="">Выберите месяц</option>
+    <option
+      v-for="m in month"
+      :key="m"
+      :value="m"
+    >
+      {{ m }}
+    </option>
+  </select>
+
+  <select v-model="selectedYear">
+    <option value="">Выберите год</option>
+    <option
+      v-for="y in year"
+      :key="y"
+      :value="y"
+    >
+      {{ y }}
+    </option>
+  </select>
+
+  <p>Вы выбрали: {{ selectedDay ? selectedDay : '—' }}, {{ selectedMonth || '—' }}, {{ selectedYear || '—' }}</p>
+</template>
