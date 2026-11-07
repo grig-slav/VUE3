@@ -601,7 +601,7 @@ function calc(){
 
 </style> -->
 
-
+<!-- 
 <script setup>
 import { computed, ref } from 'vue'
 
@@ -626,7 +626,7 @@ const daysInMonth = computed(() => {
   if (['Апрель', 'Июнь', 'Сентябрь', 'Ноябрь'].includes(selectedMonth.value)) {
     return 30
   }
-  return 31 // для остальных месяцев
+  return 31 
 })
 </script>
 
@@ -665,4 +665,61 @@ const daysInMonth = computed(() => {
   </select>
 
   <p>Вы выбрали: {{ selectedDay ? selectedDay : '—' }}, {{ selectedMonth || '—' }}, {{ selectedYear || '—' }}</p>
+</template> -->
+
+
+
+
+<script setup>
+import { computed, ref } from 'vue'
+import HelloWorld from './components/HelloWorld.vue';
+import Card from './components/Card.vue';
+import Counter from './components/Counter.vue';
+import Header from './components/Header.vue';
+import MainContent from './components/MainContent.vue';
+import Footer from './components/Footer.vue';
+const users=ref([
+    {
+        id:1,
+        name:"LEW",
+        age:20,
+        active:true
+    },
+    {
+        id:2,
+        name:'lleeeV',
+        age:111,
+        active:true
+    },
+    {
+        id:3,
+        name:'LLLLeeeV',
+        age:1,
+        active:false
+    }
+])
+function removeUsers(id){
+  users.value=users.value.filter(user=>user.id!==id)
+}
+</script>
+
+<template>
+<!-- <h1> Главная страница</h1> -->
+<!-- <Card/>
+<Counter /> -->
+<!-- <Header/>
+<MainContent/>
+<Card 
+:name="name"
+:age="age"
+@change-name="changeName"/>
+<Footer/> -->
+
+<h1>
+  <Card  v-for="user in users":key="user.id"
+    :name="user.name"
+    :id="user.id"
+    :age="user.age"
+    @delete-user="removeUsers"/>
+</h1>
 </template>
