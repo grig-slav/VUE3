@@ -670,7 +670,7 @@ const daysInMonth = computed(() => {
 
 
 
-<script setup>
+<!-- <script setup>
 import { computed, ref } from 'vue'
 import HelloWorld from './components/HelloWorld.vue';
 import Card from './components/Card.vue';
@@ -713,7 +713,7 @@ function removeUsers(id){
 :name="name"
 :age="age"
 @change-name="changeName"/>
-<Footer/> -->
+<Footer/> 
 
 <h1>
   <Card  v-for="user in users":key="user.id"
@@ -722,4 +722,161 @@ function removeUsers(id){
     :age="user.age"
     @delete-user="removeUsers"/>
 </h1>
+</template> -->
+
+
+<!-- 
+<script setup lang="ts">
+import { computed, ref } from 'vue'
+import Cart from './components/Cart.vue';
+import Modal from './components/Modal.vue';
+import ProductCard from './components/ProductCard.vue';
+import UserList from './components/UserList.vue';
+const name=ref<string>('Aboba.')
+</script>
+
+<template>
+<!-- <ProductCard>
+  <template #title>
+    <h2>
+      Машина
+    </h2>
+  </template>
+  <template #default>
+  <p>
+    Стоимость:2.000.000руб,<br>
+    Описание:большая, красная.
+  </p>
+  </template>
+  <template #actions>
+    <button>купить</button>
+    <button>избранное</button>
+  </template>
+  
+</ProductCard>
+<ProductCard>
+  <template #title>
+    <h2>
+      Квартира
+    </h2>
+  </template>
+  <template #default>
+  <p>
+    Стоимость:7.000.000руб,<br>
+    Описание:маленькая, белая.
+  </p>
+  </template>
+  <template #actions>
+    <button>купить</button>
+    <button>избранное</button>
+  </template>
+  
+</ProductCard>
+<ProductCard>
+  <template #title>
+    <h2>
+      Компьтер
+    </h2>
+  </template>
+  <template #default>
+  <p>
+    Стоимость:200.000руб,<br>
+    Описание:круто, классно.
+  </p>
+  </template>
+
+  <template #actions>
+    <button>купить</button>
+    <button>избранное</button>
+  </template>
+  
+</ProductCard> 
+
+
+
+<UserList>
+  <template #default="slotProps">
+    <h2>
+      {{ slotProps.user.name }}
+    </h2>
+    <p>
+      Возраст:{{ slotProps.user.age }}
+       |||||||||||||||||||||||||||||||||||||||<!--!!!!!!!!!!!!!!!!!!!!!!!! ДЕСТРУКТУРИЗАЦИЯ СЛОТОВ 
+    </p>
+  </template>
+</UserList>
+</template>
+<style scoped>
+</style> -->
+<!-- 
+<script setup lang="ts">
+import{ref,computed} from 'vue'
+import Cart from './components/Cart.vue';
+
+type User={
+  id:number
+  name:string
+  age:number
+
+}
+const users=ref<User[]>([
+  {
+    id:1,
+  name:"BOB",
+  age:30
+  },
+  {
+    id:2,
+  name:"BOB22",
+  age:20
+  }
+])
+function removeId(id:number){
+  users.value=users.value.filter(user=>user.id!==id)
+}
+</script>
+<template>
+  <Cart
+  v-for="user in users"
+  :key="user.id"
+  :id="user.id"
+  :name="user.name"
+  :age="user.age"
+  @deleteUser="removeId">
+
+  </Cart>
+</template>
+ -->
+
+
+<script setup lang="ts">
+import{ref,computed} from 'vue'
+import Cart from './components/Cart.vue';
+
+type User={
+  id:number
+  name:string
+  age:number
+
+}
+const users=ref<User[]>([
+  {
+    id:1,
+  name:"BOB",
+  age:30
+  },
+  {
+    id:2,
+  name:"BOB22",
+  age:20
+  }
+])
+function removeId(id:number){
+  users.value=users.value.filter(user=>user.id!==id)
+}
+</script>
+<template>
+  <v-btn>
+    add
+  </v-btn>
 </template>
