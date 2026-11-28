@@ -849,34 +849,132 @@ function removeId(id:number){
  -->
 
 
-<script setup lang="ts">
-import{ref,computed} from 'vue'
-import Cart from './components/Cart.vue';
+<script setup>
+import { ref } from 'vue'
 
-type User={
-  id:number
-  name:string
-  age:number
-
-}
-const users=ref<User[]>([
-  {
-    id:1,
-  name:"BOB",
-  age:30
-  },
-  {
-    id:2,
-  name:"BOB22",
-  age:20
-  }
-])
-function removeId(id:number){
-  users.value=users.value.filter(user=>user.id!==id)
-}
+const dialog = ref(false)
 </script>
+
 <template>
-  <v-btn>
-    add
-  </v-btn>
+  <v-app>
+    <v-container class="page">
+
+      <header>
+        ♡ МАМА
+      
+      </header>
+
+      <section id="home" class="hero">
+        <div>
+          <p>С ДНЁМ МАТЕРИ ♡</p>
+          <h1>Мама —<br>мой целый мир</h1>
+          <p>Спасибо за твою любовь, заботу и тепло.</p>
+          <v-btn color="pink" rounded @click="dialog = true">
+            Открыть поздравление ♡
+          </v-btn>
+        </div>
+      </section>
+
+      <section class="reasons">
+        <h2>За что я люблю тебя</h2>
+        <v-row>
+          <v-col v-for="item in ['♡ За любовь', '☼ За тепло', '❀ За заботу']" cols="4">
+            <v-card class="reason">{{ item }}</v-card>
+          </v-col>
+        </v-row>
+      </section>
+
+    
+
+      <section id="letter" class="letter">
+        <h2>♡</h2>
+        <h2>Письмо для мамы</h2>
+        <p>Внутри самые важные слова...</p>
+        <v-btn color="pink" rounded @click="dialog = true">
+          Открыть письмо
+        </v-btn>
+      </section>
+
+      <footer>Сделано с любовью ♡</footer>
+
+      <v-dialog v-model="dialog" max-width="400">
+        <v-card class="pa-5 text-center">
+          <h2>Любимой маме ♡</h2>
+          <p class="my-4">
+            Мамочка, спасибо за твою любовь,
+            заботу и поддержку. Я тебя очень люблю!
+          </p>
+          <v-btn color="pink" @click="dialog = false">
+            Закрыть
+          </v-btn>
+        </v-card>
+      </v-dialog>
+
+    </v-container>
+  </v-app>
 </template>
+
+<style scoped>
+.page {
+  min-width: 1900px;
+  background: #fff9fb;
+  color: #573c4b;
+  font-family: Georgia, serif;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+}
+
+nav a {
+  margin: 8px;
+  color: #754858;
+  text-decoration: none;
+}
+
+.hero {
+  padding: 50px 30px;
+  border-radius: 20px;
+  background-image: url(./assets/i.webp);
+}
+
+.hero h1 {
+  font-size: 36px;
+}
+
+.reasons, .letter {
+  background: #f1dce8;
+  padding: 25px;
+  margin-top: 20px;
+  border-radius: 20px;
+  text-align: center;
+}
+
+.reason {
+  padding: 20px 5px;
+  text-align: center;
+  background: white;
+  color: #000000;
+}
+
+section h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+#memories {
+  margin-top: 25px;
+}
+
+.letter {
+  padding: 30px;
+}
+
+footer {
+  text-align: center;
+  padding: 20px;
+}
+</style>
